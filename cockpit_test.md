@@ -235,6 +235,7 @@ So Cockpit has at least a couple of options for writing experiments:
     *   It has a little GUI that allows you to do things like set a filenames (we'll come back to this), automatically save files, set a number of repetitions, easy timelapse functionality
 * The `ImmediateModeExperiment` class which is just a subclass of `Experiment`, but doesn't deal with the hardware actiontables and so is nominally easier to write
     *   On re-reading the docs, it appears that the intended use of the `ImmediateModeExperiment` is actually via import into PyShell, so really this is a repeat
+
 I'm going to start with an `ImmediateModeExperiment`, because dealing with a full `Experiment` seems like a complicated starting point, and having things like automatic file saving, and easy setting of the repetition number are useful to me. Plus it is probably more easily reused by someone else.
 
 ### Experiment dialog
