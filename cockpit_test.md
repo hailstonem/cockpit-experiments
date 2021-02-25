@@ -18,17 +18,19 @@ Cockpit can be installed directly from pip,
 pip install microscope-cockpit    
 ```
 
-I think if you just want the core cockpit functionality, this is probably fine, but it is advisable to install the dependencies via a package manager, especially if using additional packages e.g. microscope-aotools like me. I used conda to install scipy, scikit-image and numba, which are required by microscope-aotools. NB/ The aotools functionality is not currently on the main branch, so you'll want to install iandobbie's dm-sim branch if you want a dm.
+I think if you just want the core cockpit functionality, this is probably fine, but it is advisable to install the dependencies via a package manager, especially if using additional packages e.g. microscope-aotools. I used conda to install scipy, scikit-image and numba, which are required by microscope-aotools. NB/ The aotools functionality is not currently on the main branch, so you'll want to install iandobbie's dm-sim branch if you want a dm.
 
 Once installed cockpit can be run directly with
 ```
 cockpit
 ```
-And this will load up the GUI and generate a number of dummy devices: primarily lasers and cameras for your convenience and viewing pleasure (assuming you're a big fan of uniform noise). 
+This will load up the GUI and generate a number of dummy devices: primarily lasers and cameras for your convenience and viewing pleasure (assuming you're a big fan of uniform noise). 
 
 All done, now you can skip to the actual Experiment writing bit...
 
-Well, sort of. This might be sufficient if all that is needed for your experiment a way of capturing images from a dummy camera, but most likely you want to do some form of configuration: this allows you to name devices and specify ones that aren't part of the default. For instance, I want a DM device that's not part of the existing config.
+Well, sort of.
+
+This might be sufficient if all that is needed for your experiment a way of capturing images from a dummy camera, but most likely you want to do some form of configuration: this allows you to name devices and specify ones that aren't part of the default. For instance, I want a DM device that's not part of the existing config.
 
 -----
 ### Side note: A brief cockpit-centric view of cockpit and microscope
@@ -44,8 +46,7 @@ This requires a config file. What does a config file look like?
 
 ~~https://github.com/MicronOxford/cockpit/blob/master/doc/config.rst~~
 
-*No not that kind of config file*, those are for cockpit, we'll come back to that later! A python-microscope config file:
-https://www.micron.ox.ac.uk/software/microscope/doc/architecture/device-server.html
+*No not that kind of config file*, those are for cockpit, we'll come back to that later! A [python-microscope config file](https://www.micron.ox.ac.uk/software/microscope/doc/architecture/device-server.html).
 
 These are regular python files with imports and everything, but are run (with python-microscope installed) with 
 ```deviceserver PATHTOCONFIGFILE.py ```
@@ -127,7 +128,7 @@ Now we need to connect them up to cockpit. [This requires a 'depot' file in a sp
 
 So for me (Windows) there is a `config.py` file (and some log files) at 
 ```%LocalAppData%\cockpit\ ```
-so I'm just going to add the `depot.conf` file here too. 
+and I'm just going to add the `depot.conf` file here too. 
 
 NB1/ This `config.py` file is for the cockpit GUI options that is not really detailed in the docs as far as I can see, but it has some useful settings: I explicitly enabled PyShell here because it was convenient for (later) testing parts of my experiment.
 
@@ -231,17 +232,20 @@ Now assuming this is working, there you are, your very own fake microscope.
 So Cockpit has at least a couple of options for writing experiments:
 * PyShell: we could directly import a module/function to tell cockpit what to do
 * The `Experiment` class which allows for speed optimised experiments featuring hardware actiontables that I don't currently understand enough about
-    *   It has a little GUI that allows you to do things like set a file names (we'll come back to this), automatically save files, set a number of repetitions, easy timelapse functionality
+    *   It has a little GUI that allows you to do things like set a filenames (we'll come back to this), automatically save files, set a number of repetitions, easy timelapse functionality
 * The `ImmediateModeExperiment` class which is just a subclass of `Experiment`, but doesn't deal with the hardware actiontables and so is nominally easier to write
-
+    *   On re-reading the docs, it appears that the intended use of the `ImmediateModeExperiment` is actually via import into PyShell, so really this is a repeat
 I'm going to start with an `ImmediateModeExperiment`, because dealing with a full `Experiment` seems like a complicated starting point, and having things like automatic file saving, and easy setting of the repetition number are useful to me. Plus it is probably more easily reused by someone else.
 
-### Experiment dialogue
-If you run cockpit and click on "Single Site Experiment", a dialog box with various options will pop up, including a choice of experiment (that we will be making in a minute). There are relatively few other options here, but they are sufficient for simple experiments, and you could of course making your own if you're so inclined.
+### Experiment dialog
+If you run cockpit and click on "Single Site Experiment", a dialog box with various options will pop up, including a choice of experiment (that we will be making in a minute). There are relatively few other options here, but they are sufficient for simple experiments, and you could of course make your own if you're so inclined.
 
 ### Experiment set up
 New experiments need to be registered in `cockpit\experiment\ExperimentRegistry`. Conveniently, there are also a number of experiments already there, so if for instance you want to make an experiment around creating a ZStack, it might be worth checking those out.
 
 The actual registration is straightforward, you just need to import your module, and then add it to `registeredModules`. Note this list is the same ordering as found in the "Single Site Experiment", so if you want your experiment to be the default, put it at the top!
+
+Split into GUI Experiment
+vs. PyShell?
 
 
