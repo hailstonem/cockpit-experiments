@@ -1,15 +1,3 @@
-Copyright (C) 2021 Martin Hailstone
-
-# Cockpit - getting started with simulated experiments 25.02.2021
-
-This is my experience of writing an Experiment in cockpit. It contains instructions, with examples, for setting up cockpit, and then for creating an experiment to run on a simulated microscope*.
-
-It's probably most useful to those with an existing microscope that is set up with cockpit and are looking to write custom experiments for it, although it might also be a useful starting point for those with more hardware oriented goals.
-
-I'm sort assuming you -like me- are somewhat proficient at python programming, but are not so familiar with microscope control software.
-
-\* Just in case it was ambiguous, this is does not simulate the optics of a microscope, just the control of it, although if you wanted to add that feature, it should be possible.
-
 ## Part 1: Setting up a simulated microscope
 
 Cockpit can be installed directly from pip,
@@ -226,6 +214,8 @@ configparser.ParsingError: Source contains parsing errors: 'C:\\Users\\Martin\\A
 Yeah like don't put random stuff in your depot files (# comments are fine though!)
 
 Now assuming this is working, there you are, your very own fake microscope.
+
+Playing Next: Make an Experiment: [Part II](part2.md)
 
 
 
