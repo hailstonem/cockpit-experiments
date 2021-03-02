@@ -27,10 +27,10 @@ Starting points for the `ImmediateModeExperiment` can be found [here](https://gi
 
 #### A working example
 
-`immediateModeExample2.py` doesn't work out of the box: I've included a tweaked version here(todo:add link) that addresses the problems, and is setup up to work with a laser called '488nm' (so make sure you have this your depot file).
+However, `immediateModeExample2.py` doesn't work out of the box: I've included a tweaked version [here](immediateModeExample2.py) that addresses the problems, and is setup up to work with a laser called '488nm' (so make sure you have this your depot file).
 
 Key changes to note are:
-* Need to define is_running to return False (otherwise cockpit won't let you use takeImage). This is definitely a hacky workaround, so might break something.
+* Need to define `is_running` to return False (otherwise cockpit won't let you use `takeImage`). This is definitely a hacky workaround, so might break something.
 * The way you access the available Imagers has changed since this was written: use `depot.getHandlerWithName(f"{camera.name} imager").takeImage`
 
 From here it isn't difficult to make this into the kind of experiment I want to run, but first we need to be able to set the AO device:
@@ -63,22 +63,24 @@ result = events.executeAndWaitForOrTimeout(
     camera.getExposureTime() / 1000 + CAMERA_TIMEOUT,
 )
 ``` 
-Note here that we are specifying a 'handler', in this case an imager, that is reponsible for telling the camera to collect an image, not directly the camera.
+Note here that we are specifying a 'handler', in this case an imager, that is reponsible for telling the camera to collect an image, not directly the camera. Also, we're not specifying a named camera here, just the first one that is active, which might be useful for situations with multiple cameras.
 
 #### Saving images:
-The MRC datasaver class works fine for saving multiple images to a file and should definitely be the default pick because it saves images with metadata, but if we want a bit more control over the saving process, this is difficult to do. I opted for just using imageio to save as tiff files, because they are super widely supported.
+The MRC datasaver class works fine for saving multiple images to a file and should definitely be the default pick because it saves images with metadata, but if we want a bit more control over the saving process, this is difficult to do using the datasaver class. I opted for just using imageio to save tiff files, because they are super widely supported and I'm used to dealing with them already.
 ```python
 filename = f"{self.saveBasePath}{fprefix}.tif"
 imageio.mimwrite(filename, imlist, format="tif")
 ```
 
-### Experiment dialog
-If you run cockpit and click on "Single Site Experiment", a dialog box with various options will pop up, including a choice of experiment (that we will be making in a minute). There are relatively few other options here, but they are sufficient for simple experiments, and you could of course make your own if you're so inclined.
+### Experiments
+Full experiments should define an action_table for proper hardware optimised data collection. I've not yet looked at doing this in detail, but there are a couple of useful features of Experiments I will detail here.
 
-### Experiment set up
-New experiments need to be registered in `cockpit\experiment\ExperimentRegistry`. Conveniently, there are also a number of experiments already there, so if for instance you want to make an experiment around creating a ZStack, it might be worth checking those out. Even more conveniently, if you've already made the ImmediateModeExperiment above, you can register it here, and not have to faff around with PyShell (although that is a useful fallback if it doesn't work!)
+#### Dialog
+If you run cockpit and click on "Single Site Experiment", a dialog box with various options will pop up, including a choice of experiment (that we will be making in a minute). There are relatively few other options here, but they are sufficient for simple experiments, and you could of course make your own if you're so inclined. We can make our ImmediateModeExperiment show up here by registering it as an experiment:
 
-The actual registration is straightforward, you just need to import your module, and then add it to `registeredModules`. Note this list is the same ordering as found in the "Single Site Experiment", so if you want your experiment to be the default, put it at the top!
+#### Experiment registration
+New experiments need to be registered in `cockpit\experiment\ExperimentRegistry.py`. Conveniently, if you've already made the `ImmediateModeExperiment` above, you can register it here, and not have to faff around with PyShell (although that is a useful fallback if it doesn't work!)
 
-Split into GUI Experiment
-vs. PyShell?
+The actual registration is straightforward, you just need to import your module, and then add it to `registeredModules`. Note this list is the same ordering as found in the "Single Site Experiment" dialog box, so if you want your experiment to be the default, put it at the top!
+
+#TODO Full experiment version 
