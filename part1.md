@@ -14,7 +14,7 @@ cockpit
 ```
 This will load up the GUI and generate a number of dummy devices: primarily lasers and cameras for your convenience and viewing pleasure (assuming you're a big fan of uniform noise). 
 
-All done, now you can skip to the actual Experiment writing bit...
+All done, now you can skip to the actual [Experiment writing bit...](part2.md)
 
 Well, sort of.
 
@@ -181,7 +181,12 @@ Ignoring the server being closed (which is normal), we want all the devices conn
 
 Now we can run ```cockpit```. Hopefully this just works!
 
+*If so we can move on to [Part II](part2.md)*
+
 #### Troubleshooting the cockpit configuration
+
+There are a couple of problems we might encounter if we haven't set up the files correctly: I'll detail the problem and the error messages here to help with diagnosis.
+
 1. Say we have accidentally switched our dm and our camera ports. This won't show up earlier with cockpit.status, but when cockpit proper tries to run, it's likely to realise that the device doesn't work like it should: and then cockpit gives a communication error:
 ```
 Pyro4.errors.CommunicationError: connection to ('127.0.0.1', 8001) rejected: unknown object
@@ -213,9 +218,11 @@ configparser.ParsingError: Source contains parsing errors: 'C:\\Users\\Martin\\A
 ```
 Yeah like don't put random stuff in your depot files (# comments are fine though!)
 
+#### Done!
+
 Now assuming this is working, there you are, your very own fake microscope.
 
-Playing Next: Make an Experiment: [Part II](part2.md)
+*Playing Next: Make an Experiment: [Part II](part2.md)*
 
 
 
