@@ -8,9 +8,9 @@ I've made an effort not to assume familiarity with reading the cockpit code, but
 
 This is split into two sections:
 
-* [Part I](cockpit-experiments/part1.md) is concerned with setting up cockpit/ a simulated microscope in cockpit. 
+* [Part I](part1.md) is concerned with setting up cockpit/ a simulated microscope in cockpit. 
 
-* [Part II](cockpit-experiments/part2.md)  is about how to write an automated experiment for cockpit, with specific reference to adaptive optics
+* [Part II](part2.md)  is about how to write an automated experiment for cockpit, with specific reference to adaptive optics
 
 
 \* Just in case it was ambiguous, this is does not simulate the optics of a microscope, just the control of it, although if you wanted to add that feature, it should be possible.
