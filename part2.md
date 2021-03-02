@@ -14,9 +14,9 @@ I'm going to start with an `ImmediateModeExperiment`, because dealing with a ful
 
 ***
 As a brief aside, for the experiment I am building here, I want to:
-Set the AO device to one of 11 different settings
-Take an image
-Save the 11 images as a single file with a specified name
+* Set the AO device to one of 11 different settings
+* Take an image
+* Save the 11 images as a single file with a specified name
 ***
 
 ### ImmediateModeExperiment
