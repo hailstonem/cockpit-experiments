@@ -17,6 +17,8 @@ As a brief aside, for the experiment I am building here, I want to:
 * Set the AO device to one of 11 different settings
 * Take an image
 * Save the 11 images as a single file with a specified name
+
+Much of the code below will be specific to this design, but I think the general idea (Get Devices, Do something with Device, Capture Images, Save Images) is probably pretty general.
 ***
 
 ### ImmediateModeExperiment
